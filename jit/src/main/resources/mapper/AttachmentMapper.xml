@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ljz.jit.mapper.AttachmentMapper" >
+  <resultMap id="BaseResultMap" type="com.ljz.jit.pojo.Attachment" >
+    <id column="attachmentId" property="attachmentid" jdbcType="INTEGER" />
+    <result column="attachmentName" property="attachmentname" jdbcType="VARCHAR" />
+    <result column="attachmentPath" property="attachmentpath" jdbcType="VARCHAR" />
+    <result column="attachmentTime" property="attachmenttime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    attachmentId, attachmentName, attachmentPath, attachmentTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ljz.jit.pojo.AttachmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from attachment
+    where attachmentId = #{attachmentid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from attachment
+    where attachmentId = #{attachmentid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ljz.jit.pojo.AttachmentExample" >
+    delete from attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ljz.jit.pojo.Attachment" >
+    insert into attachment (attachmentId, attachmentName, attachmentPath, 
+      attachmentTime)
+    values (#{attachmentid,jdbcType=INTEGER}, #{attachmentname,jdbcType=VARCHAR}, #{attachmentpath,jdbcType=VARCHAR}, 
+      #{attachmenttime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ljz.jit.pojo.Attachment" >
+    insert into attachment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attachmentid != null" >
+        attachmentId,
+      </if>
+      <if test="attachmentname != null" >
+        attachmentName,
+      </if>
+      <if test="attachmentpath != null" >
+        attachmentPath,
+      </if>
+      <if test="attachmenttime != null" >
+        attachmentTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attachmentid != null" >
+        #{attachmentid,jdbcType=INTEGER},
+      </if>
+      <if test="attachmentname != null" >
+        #{attachmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentpath != null" >
+        #{attachmentpath,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmenttime != null" >
+        #{attachmenttime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ljz.jit.pojo.AttachmentExample" resultType="java.lang.Integer" >
+    select count(*) from attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update attachment
+    <set >
+      <if test="record.attachmentid != null" >
+        attachmentId = #{record.attachmentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.attachmentname != null" >
+        attachmentName = #{record.attachmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachmentpath != null" >
+        attachmentPath = #{record.attachmentpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachmenttime != null" >
+        attachmentTime = #{record.attachmenttime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update attachment
+    set attachmentId = #{record.attachmentid,jdbcType=INTEGER},
+      attachmentName = #{record.attachmentname,jdbcType=VARCHAR},
+      attachmentPath = #{record.attachmentpath,jdbcType=VARCHAR},
+      attachmentTime = #{record.attachmenttime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ljz.jit.pojo.Attachment" >
+    update attachment
+    <set >
+      <if test="attachmentname != null" >
+        attachmentName = #{attachmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentpath != null" >
+        attachmentPath = #{attachmentpath,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmenttime != null" >
+        attachmentTime = #{attachmenttime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where attachmentId = #{attachmentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ljz.jit.pojo.Attachment" >
+    update attachment
+    set attachmentName = #{attachmentname,jdbcType=VARCHAR},
+      attachmentPath = #{attachmentpath,jdbcType=VARCHAR},
+      attachmentTime = #{attachmenttime,jdbcType=VARCHAR}
+    where attachmentId = #{attachmentid,jdbcType=INTEGER}
+  </update>
+</mapper>

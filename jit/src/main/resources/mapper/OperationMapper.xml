@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ljz.jit.mapper.OperationMapper" >
+  <resultMap id="BaseResultMap" type="com.ljz.jit.pojo.Operation" >
+    <id column="operationId" property="operationid" jdbcType="INTEGER" />
+    <result column="operationName" property="operationname" jdbcType="VARCHAR" />
+    <result column="menuId" property="menuid" jdbcType="INTEGER" />
+    <result column="menuName" property="menuname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    operationId, operationName, menuId, menuName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ljz.jit.pojo.OperationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation
+    where operationId = #{operationid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from operation
+    where operationId = #{operationid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ljz.jit.pojo.OperationExample" >
+    delete from operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ljz.jit.pojo.Operation" >
+    insert into operation (operationId, operationName, menuId, 
+      menuName)
+    values (#{operationid,jdbcType=INTEGER}, #{operationname,jdbcType=VARCHAR}, #{menuid,jdbcType=INTEGER}, 
+      #{menuname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ljz.jit.pojo.Operation" >
+    insert into operation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operationid != null" >
+        operationId,
+      </if>
+      <if test="operationname != null" >
+        operationName,
+      </if>
+      <if test="menuid != null" >
+        menuId,
+      </if>
+      <if test="menuname != null" >
+        menuName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operationid != null" >
+        #{operationid,jdbcType=INTEGER},
+      </if>
+      <if test="operationname != null" >
+        #{operationname,jdbcType=VARCHAR},
+      </if>
+      <if test="menuid != null" >
+        #{menuid,jdbcType=INTEGER},
+      </if>
+      <if test="menuname != null" >
+        #{menuname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ljz.jit.pojo.OperationExample" resultType="java.lang.Integer" >
+    select count(*) from operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update operation
+    <set >
+      <if test="record.operationid != null" >
+        operationId = #{record.operationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.operationname != null" >
+        operationName = #{record.operationname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuid != null" >
+        menuId = #{record.menuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuname != null" >
+        menuName = #{record.menuname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update operation
+    set operationId = #{record.operationid,jdbcType=INTEGER},
+      operationName = #{record.operationname,jdbcType=VARCHAR},
+      menuId = #{record.menuid,jdbcType=INTEGER},
+      menuName = #{record.menuname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ljz.jit.pojo.Operation" >
+    update operation
+    <set >
+      <if test="operationname != null" >
+        operationName = #{operationname,jdbcType=VARCHAR},
+      </if>
+      <if test="menuid != null" >
+        menuId = #{menuid,jdbcType=INTEGER},
+      </if>
+      <if test="menuname != null" >
+        menuName = #{menuname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where operationId = #{operationid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ljz.jit.pojo.Operation" >
+    update operation
+    set operationName = #{operationname,jdbcType=VARCHAR},
+      menuId = #{menuid,jdbcType=INTEGER},
+      menuName = #{menuname,jdbcType=VARCHAR}
+    where operationId = #{operationid,jdbcType=INTEGER}
+  </update>
+</mapper>
